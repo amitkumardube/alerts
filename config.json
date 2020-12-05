@@ -1,0 +1,8 @@
+{
+	"database" : {
+		"type" : "mysql",
+		"name" : "abc.mysql"
+		}
+
+
+}
