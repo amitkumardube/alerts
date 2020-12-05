@@ -1,0 +1,27 @@
+{
+	"database_config" : {
+		"type" : "mysql",
+		"host" : "localhost" ,
+		"user" : "amit" ,
+		"password" : "amit" ,
+		"database" : "dbname"
+		},
+	"alert_config" : [
+		{
+			"table_name" : "abc",
+			"column_name" : "abc",
+			"expiry_alert_threshold_days" : 30 
+		},
+		{
+			"table_name" : "def",
+			"column_name" : "def",
+			"stock_alert_threshold_quantity" : 10
+		}
+	],
+	"email_config" : {
+		"smtp_server" : "abc" ,
+		"user" : "abc" ,
+		"password" : "abc",
+		"email_to" : ["abc" , "def"]
+	}
+}
