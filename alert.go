@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"alerts/config"
+	_ "alerts/config"
 )
 
 func main(){

@@ -1,5 +1,12 @@
 package config
 
+import (
+	"os"
+	"fmt"
+	"log"
+	"encoding/json"
+)
+
 type Config struct {
 	database_config Database_config `json:"database_config,omitempty"`
 	alert_config []Alert_config `json:"alert_config,omitempty"`
@@ -22,8 +29,31 @@ type Alert_config struct {
 }
 
 type Email_config struct {
-	smtp string `json:"smpt,omitempty"`
+	smtp string `json:"smtp,omitempty"`
 }
 
-
+func init(){
+	// checking the number of arguments passed
+	if len(os.Args) < 2 {
+		fmt.Println("Missing the file name as argument. The config file must be passed at argument.")
+		os.Exit(1)
+	}
+	// we need to read the config file as json as map the values with the struct values
+	// the config file will be passed as argument in order to get the complete file name
+	file_name := os.Args[1]
+	file , err := os.Open(file_name)
+	if err != nil { 
+		log.Fatal(err)
+		return
+	}
+	decode_file := json.NewDecoder(file)
+	decode_file.UseNumber()
+	var conf Config
+	err = decode_file.Decode(&conf)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	fmt.Println(conf.database_config.database_type)
+}
 
