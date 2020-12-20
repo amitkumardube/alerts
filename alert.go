@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	_ "alerts/config"
+	_ "config"
 )
 
 func main(){
 
 
 	fmt.Println("Listed all the config")
-
 
 }
