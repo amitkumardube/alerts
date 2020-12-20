@@ -7,6 +7,14 @@ import (
 	"encoding/json"
 )
 
+var (
+    DB_type string
+    DB_hostname string
+    DB_user string
+    DB_password string
+    DB_name string
+)
+
 type Config struct {
 	Database_config Database_config `json:"database_config,omitempty"`
 	Alert_config []Alert_config `json:"alert_config,omitempty"`
@@ -33,6 +41,7 @@ type Email_config struct {
 }
 
 func init(){
+    fmt.Println("calling the init function from config package")
 	// checking the number of arguments passed
 	if len(os.Args) < 2 {
 		fmt.Println("Missing the file name as argument. The config file must be passed at argument.")
@@ -54,13 +63,18 @@ func init(){
 		log.Fatal(err)
 		return
 	}
-	fmt.Println("Database type to connect to : " , conf.Database_config.Database_type)
-	fmt.Println("Database Host Name : " , conf.Database_config.Host)
-	fmt.Println("Database User Name : " , conf.Database_config.User)
-	fmt.Println("Database User Password : " , conf.Database_config.Password)
-	fmt.Println("Database Name : " , conf.Database_config.Database)
+	// setting values for global variables to use in other packages.
+	DB_type = conf.Database_config.Database_type
+	DB_hostname = conf.Database_config.Host
+	DB_user = conf.Database_config.User
+	DB_password = conf.Database_config.Password
+	DB_name = conf.Database_config.Database
+	fmt.Println("Database type to connect to : " , DB_type)
+	fmt.Println("Database Host Name : " , DB_hostname)
+	fmt.Println("Database User Name : " , DB_user)
+	fmt.Println("Database User Password : " , DB_password)
+	fmt.Println("Database Name : " , DB_name)
 	fmt.Println("Database type to connect to : " , conf.Alert_config[0].Expiry_alert_threshold_days)
 	fmt.Println("Database type to connect to : " , conf.Alert_config[1].Stock_alert_threshold_quantity)
 	fmt.Println("Database type to connect to : " , conf.Email_config.Smtp)
 }
-

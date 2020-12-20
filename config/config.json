@@ -2,9 +2,9 @@
 	"database_config" : {
 		"type" : "mysql",
 		"host" : "localhost" ,
-		"user" : "amit" ,
-		"password" : "amit" ,
-		"database" : "dbname"
+		"user" : "amit_alert" ,
+		"password" : "amit_alert" ,
+		"database" : "indianspices_alerts"
 		},
 	"alert_config" : [
 		{

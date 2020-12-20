@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	_ "config"
+	db "dbconn"
 )
 
 func main(){
-
-
-	fmt.Println("Listed all the config")
-
+// Calling the function in dbconn package to see the product with expiry dates
+    fmt.Println("Getting the list of products approaching expiry")
+	db.Get_expiry_data()
 }
