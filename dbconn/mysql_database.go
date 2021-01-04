@@ -17,6 +17,12 @@ var (
     name string = conf.DB_name
 )
 
+// Defining to struct to store database returned values
+
+type db_data struct{
+    expiry_date string `json:"expiry_date"`
+}
+
 // forming the connection string
 
     func dsn(user string , pass string , host string , name string) string {
@@ -50,8 +56,27 @@ var (
     func Get_expiry_data(){
         fmt.Println("Connecting to database to get product expiry data")
         db := return_mysql_database_con(user, password, host, name)
+        defer db.Close();
+        tab_name := conf.Exp_tab_name
+        exp_col_name := conf.Exp_col_name
+        exp_id_col_name := conf.Exp_id_col_name
+        exp_alert_threshold_days := conf.Exp_alert_threshold_days
+        query := "SELECT "+exp_col_name+" , "+exp_id_col_name+" from "+tab_name+" where "
         if (ping_database(db , name)){
             fmt.Println("Connected")
+            results, err := db.Query("SELECT first FROM test")
+            if err != nil {
+                log.Println(err.Error())
+            }
+            for results.Next(){
+                var data db_data
+                // for each row, scan the result into our db_data composite object
+                err = results.Scan(&data.expiry_date)
+                if err != nil {
+                    log.Println(err.Error())
+                }
+                fmt.Println(data.expiry_date)
+            }
         }else{
             fmt.Println("Connection failed")
             return

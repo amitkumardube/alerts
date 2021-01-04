@@ -5,19 +5,19 @@
 		"user" : "amit_alert" ,
 		"password" : "amit_alert" ,
 		"database" : "indianspices_alerts"
-		},
-	"alert_config" : [
-		{
-			"table_name" : "abc",
-			"column_name" : "abc",
-			"expiry_alert_threshold_days" : 30 
-		},
-		{
-			"table_name" : "def",
-			"column_name" : "def",
-			"stock_alert_threshold_quantity" : 10
-		}
-	],
+	},
+	"expiry_alert_config" : {
+		"table_name": "test",
+		"expiry_column_name": "first",
+		"id_column_name": "second",
+		"expiry_alert_threshold_days": 30
+	},
+	"stock_alert_config" : {
+		"table_name" : "def",
+		"stock_column_name" : "def",
+		"id_column_name" : "def",
+		"stock_alert_threshold_quantity" : 10
+	},
 	"email_config" : {
 		"smtp_server" : "abc" ,
 		"user" : "abc" ,

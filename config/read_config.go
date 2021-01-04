@@ -13,12 +13,31 @@ var (
     DB_user string
     DB_password string
     DB_name string
+    Exp_tab_name string
+    Exp_col_name string
+    Exp_id_col_name string
+    Exp_alert_threshold_days int
 )
 
 type Config struct {
 	Database_config Database_config `json:"database_config,omitempty"`
-	Alert_config []Alert_config `json:"alert_config,omitempty"`
+	Expiry_alert_config Expiry_alert_config `json:"expiry_alert_config,omitempty"`
+	Stock_alert_config Stock_alert_config `json:"stock_alert_config,omitempty"`
 	Email_config Email_config `json:"email_config,omitempty"`
+}
+
+type Expiry_alert_config struct {
+    Table_name string `json:"table_name,omitempty"`
+    Expiry_column_name string `json:"expiry_column_name,omitempty"`
+    Id_column_name string `json:"id_column_name,omitempty"`
+    Expiry_alert_threshold_days int `json:"expiry_alert_threshold_days,omitempty"`
+}
+
+type Stock_alert_config struct {
+    Table_name string `json:"table_name,omitempty"`
+    Stock_column_name string `json:"stock_column_name,omitempty"`
+    Id_column_name string `json:"id_column_name,omitempty"`
+    Stock_alert_threshold_quantity int `json:"stock_alert_threshold_quantity,omitempty"`
 }
 
 type Database_config struct {
@@ -27,13 +46,6 @@ type Database_config struct {
 	User string `json:"user,omitempty"`
 	Password string `json:"password,omitempty"`
 	Database string `json:"database,omitempty"`
-}
-
-type Alert_config struct {
-	Table_name string `json:"table_name,omitempty"`
-	Column_name string `json:"column_name,omitempty"`
-	Expiry_alert_threshold_days int `json:"expiry_alert_threshold_days,omitempty"`
-	Stock_alert_threshold_quantity int `json:"stock_alert_threshold_quantity,omitempty"`
 }
 
 type Email_config struct {
@@ -69,12 +81,13 @@ func init(){
 	DB_user = conf.Database_config.User
 	DB_password = conf.Database_config.Password
 	DB_name = conf.Database_config.Database
+    Exp_tab_name conf.Expiry_alert_config.Table_name
+    Exp_col_name conf.Expiry_alert_config.Expiry_column_name
+    Exp_id_col_name conf.Expiry_alert_config.Id_column_name
+    Exp_alert_threshold_days conf.Expiry_alert_config.Expiry_alert_threshold_days
 	fmt.Println("Database type to connect to : " , DB_type)
 	fmt.Println("Database Host Name : " , DB_hostname)
 	fmt.Println("Database User Name : " , DB_user)
 	fmt.Println("Database User Password : " , DB_password)
 	fmt.Println("Database Name : " , DB_name)
-	fmt.Println("Database type to connect to : " , conf.Alert_config[0].Expiry_alert_threshold_days)
-	fmt.Println("Database type to connect to : " , conf.Alert_config[1].Stock_alert_threshold_quantity)
-	fmt.Println("Database type to connect to : " , conf.Email_config.Smtp)
 }
