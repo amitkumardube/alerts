@@ -17,6 +17,10 @@ var (
     Exp_col_name string
     Exp_id_col_name string
     Exp_alert_threshold_days int
+    Stock_tab_name string
+    Stock_col_name string
+    Stock_id_col_name string
+    Stock_alert_threshold_quantity int
 )
 
 type Config struct {
@@ -76,15 +80,26 @@ func init(){
 		return
 	}
 	// setting values for global variables to use in other packages.
+
+	/* Initializing the database configuration */
 	DB_type = conf.Database_config.Database_type
 	DB_hostname = conf.Database_config.Host
 	DB_user = conf.Database_config.User
 	DB_password = conf.Database_config.Password
 	DB_name = conf.Database_config.Database
-    Exp_tab_name conf.Expiry_alert_config.Table_name
-    Exp_col_name conf.Expiry_alert_config.Expiry_column_name
-    Exp_id_col_name conf.Expiry_alert_config.Id_column_name
-    Exp_alert_threshold_days conf.Expiry_alert_config.Expiry_alert_threshold_days
+
+	/* Initializing the product expiry configuration */
+    Exp_tab_name = conf.Expiry_alert_config.Table_name
+    Exp_col_name = conf.Expiry_alert_config.Expiry_column_name
+    Exp_id_col_name = conf.Expiry_alert_config.Id_column_name
+    Exp_alert_threshold_days = conf.Expiry_alert_config.Expiry_alert_threshold_days
+
+    /*Initializing the product stock configuration */
+    Stock_tab_name = conf.Stock_alert_config.Table_name
+    Stock_col_name = conf.Stock_alert_config.Stock_column_name
+    Stock_id_col_name = conf.Stock_alert_config.Id_column_name
+    Stock_alert_threshold_quantity = conf.Stock_alert_config.Stock_alert_threshold_quantity
+
 	fmt.Println("Database type to connect to : " , DB_type)
 	fmt.Println("Database Host Name : " , DB_hostname)
 	fmt.Println("Database User Name : " , DB_user)

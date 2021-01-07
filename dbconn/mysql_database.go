@@ -8,6 +8,7 @@ import (
 	"context"
 	"time"
 	conf "config"
+	"strconv"
 )
 
 var (
@@ -20,7 +21,9 @@ var (
 // Defining to struct to store database returned values
 
 type db_data struct{
-    expiry_date string `json:"expiry_date"`
+    expiry_date string `json:"expiry_date,omitempty"`
+    product_id int `json:"product_id,omitempty"`
+    stock int `json:"stock,omitempty"`
 }
 
 // forming the connection string
@@ -61,29 +64,54 @@ type db_data struct{
         exp_col_name := conf.Exp_col_name
         exp_id_col_name := conf.Exp_id_col_name
         exp_alert_threshold_days := conf.Exp_alert_threshold_days
-        query := "SELECT "+exp_col_name+" , "+exp_id_col_name+" from "+tab_name+" where "
+        query := "SELECT "+exp_col_name+" , "+exp_id_col_name+" from "+tab_name+" where DATEDIFF("+exp_col_name+" , curdate()) <= "+strconv.Itoa(exp_alert_threshold_days)
         if (ping_database(db , name)){
             fmt.Println("Connected")
-            results, err := db.Query("SELECT first FROM test")
+            results, err := db.Query(query)
             if err != nil {
                 log.Println(err.Error())
             }
             for results.Next(){
                 var data db_data
                 // for each row, scan the result into our db_data composite object
-                err = results.Scan(&data.expiry_date)
+                err = results.Scan(&data.expiry_date,&data.product_id)
                 if err != nil {
                     log.Println(err.Error())
                 }
-                fmt.Println(data.expiry_date)
+                fmt.Printf("Expiry Date is : %s and Product ID is : %d \n",data.expiry_date,data.product_id)
             }
         }else{
             fmt.Println("Connection failed")
             return
         }
-
     }
 
     func Get_stock_data(){
         fmt.Println("Connecting to database to get product stock data")
+        db := return_mysql_database_con(user, password, host, name)
+        defer db.Close();
+        tab_name := conf.Stock_tab_name
+        stock_col_name := conf.Stock_col_name
+        stock_id_col_name := conf.Stock_id_col_name
+        stock_alert_threshold_quantity := conf.Stock_alert_threshold_quantity
+        query := "SELECT "+stock_col_name+" , "+stock_id_col_name+" from "+tab_name+" where "+stock_col_name+" <= "+strconv.Itoa(stock_alert_threshold_quantity)
+        if (ping_database(db , name)){
+            fmt.Println("Connected")
+            results, err := db.Query(query)
+            if err != nil {
+                log.Println(err.Error())
+            }
+            for results.Next(){
+                var data db_data
+                // for each row, scan the result into our db_data composite object
+                err = results.Scan(&data.stock,&data.product_id)
+                if err != nil {
+                    log.Println(err.Error())
+                }
+                fmt.Printf("Stock is : %d and Product ID is : %d \n",data.stock,data.product_id)
+            }
+        }else{
+            fmt.Println("Connection failed")
+            return
+        }
     }

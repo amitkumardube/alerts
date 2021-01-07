@@ -13,9 +13,9 @@
 		"expiry_alert_threshold_days": 30
 	},
 	"stock_alert_config" : {
-		"table_name" : "def",
-		"stock_column_name" : "def",
-		"id_column_name" : "def",
+		"table_name" : "stock",
+		"stock_column_name" : "stock",
+		"id_column_name" : "id",
 		"stock_alert_threshold_quantity" : 10
 	},
 	"email_config" : {
