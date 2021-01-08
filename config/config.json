@@ -19,9 +19,10 @@
 		"stock_alert_threshold_quantity" : 10
 	},
 	"email_config" : {
-		"smtp_server" : "abc" ,
-		"user" : "abc" ,
-		"password" : "abc",
-		"email_to" : ["abc" , "def"]
+		"smtp_server" : "smtp.gmail.com",
+		"port" : "587",
+		"user" : "amitkumardube@gmail.com",
+		"password" : "loveyou_sara",
+		"email_to" : ["saraamitdube@gmail.com"]
 	}
 }

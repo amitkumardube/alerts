@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	db "dbconn"
+	"email"
 )
 
 func main(){
@@ -11,4 +12,7 @@ func main(){
 	db.Get_expiry_data()
 	fmt.Println("Getting the list of products with limited stock")
 	db.Get_stock_data()
+
+// Calling the function from email package to send email
+    email.Send_email()
 }

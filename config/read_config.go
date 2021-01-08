@@ -21,6 +21,11 @@ var (
     Stock_col_name string
     Stock_id_col_name string
     Stock_alert_threshold_quantity int
+    Smtp string
+    Port string
+    User string
+    Password string
+    Email_to []string
 )
 
 type Config struct {
@@ -54,6 +59,10 @@ type Database_config struct {
 
 type Email_config struct {
 	Smtp string `json:"smtp_server,omitempty"`
+	Port string `json:"port,omitempty"`
+	User string `json:"user,omitempty"`
+	Password string `json:"password,omitempty"`
+	Email_to []string `json:"email_to,omitempty"`
 }
 
 func init(){
@@ -99,6 +108,13 @@ func init(){
     Stock_col_name = conf.Stock_alert_config.Stock_column_name
     Stock_id_col_name = conf.Stock_alert_config.Id_column_name
     Stock_alert_threshold_quantity = conf.Stock_alert_config.Stock_alert_threshold_quantity
+
+    /*Initializing the email configuration */
+    Smtp = conf.Email_config.Smtp
+    Port = conf.Email_config.Port
+    User = conf.Email_config.User
+    Password = conf.Email_config.Password
+    Email_to = conf.Email_config.Email_to
 
 	fmt.Println("Database type to connect to : " , DB_type)
 	fmt.Println("Database Host Name : " , DB_hostname)
