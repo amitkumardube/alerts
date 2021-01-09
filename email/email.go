@@ -7,6 +7,7 @@ import (
     "fmt"
 )
 
+
 // the send sending contains following steps
 /*
 1. To dial the smtp server along with port to get the smtp client
